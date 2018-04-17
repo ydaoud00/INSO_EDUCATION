@@ -18,8 +18,15 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->enum('role', ['Admin', 'Estudiante', 'Profesor']);
+            $table->unsignedInteger('center_id')->nullable();
+            $table->unsignedInteger('grade_id')->nullable();
+            $table->tinyInteger('course')->nullable();
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('center_id')->references('id')->on('centers')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('grade_id')->references('id')->on('grades')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
